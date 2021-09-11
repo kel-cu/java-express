@@ -30,14 +30,14 @@ app.get("/", (req, res) -> {
 
 Add the following dependency coordinate from Jitpack on your favorite build system:
 #### Maven 
-```
+```xml
 <repository>
     <id>jitpack.io</id>
     <url>https://jitpack.io</url>
 </repository>
 ```
 ### Stable release
-```
+```xml
 <dependency>
     <groupId>com.github.masecla22</groupId>
     <artifactId>java-express</artifactId>
@@ -45,7 +45,7 @@ Add the following dependency coordinate from Jitpack on your favorite build syst
 </dependency>
 ```
 ### Bleeding-edge
-```
+```xml
 <dependency>
     <groupId>com.github.masecla22</groupId>
     <artifactId>java-express</artifactId>
