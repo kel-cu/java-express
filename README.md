@@ -28,13 +28,32 @@ app.get("/", (req, res) -> {
 
 ## Installation
 
-Add the following dependency coordinate from JCenter on your favorite build system:
-
-[![Download](https://api.bintray.com/packages/vaccovecrana/vacco-oss/java-express/images/download.svg) ](https://bintray.com/vaccovecrana/vacco-oss/java-express/_latestVersion)
-
+Add the following dependency coordinate from Jitpack on your favorite build system:
+#### Maven 
 ```
-io.vacco.java-express:java-express:<VERSION>
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
 ```
+### Stable release
+```
+<dependency>
+    <groupId>com.github.masecla22</groupId>
+    <artifactId>java-express</artifactId>
+    <version>0.2.2</version>
+</dependency>
+```
+### Bleeding-edge
+```
+<dependency>
+    <groupId>com.github.masecla22</groupId>
+    <artifactId>java-express</artifactId>
+    <version>master-SNAPSHOT</version>
+</dependency>
+```
+
+
 
 - [Getting Started](#getting-started)
   - [Installation](#installation)
