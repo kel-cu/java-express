@@ -1,25 +1,27 @@
 package express.http.response;
 
-import com.sun.net.httpserver.Headers;
-import com.sun.net.httpserver.HttpExchange;
-import express.http.Cookie;
-import express.utils.MediaType;
-import express.utils.Status;
-import express.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+
+import express.http.Cookie;
+import express.utils.MediaType;
+import express.utils.Status;
+import express.utils.Utils;
+
 /**
- * @author Simon Reinisch
- * Class for an http-response.
+ * @author Simon Reinisch Class for an http-response.
  */
 public class Response {
 
@@ -78,7 +80,8 @@ public class Response {
      * @return This Response instance.
      */
     public Response setCookie(Cookie cookie) {
-        if (isClosed()) return this;
+        if (isClosed())
+            return this;
         this.headers.add("Set-Cookie", cookie.toString());
         return this;
     }
@@ -91,14 +94,14 @@ public class Response {
     }
 
     /**
-     * Set the response-status.
-     * Default is 200 (ok).
+     * Set the response-status. Default is 200 (ok).
      *
      * @param status The response status.
      * @return This Response instance.
      */
     public Response setStatus(Status status) {
-        if (isClosed()) return this;
+        if (isClosed())
+            return this;
         this.status = status.getCode();
         return this;
     }
@@ -109,7 +112,8 @@ public class Response {
      * @param status The response status.
      */
     public void sendStatus(Status status) {
-        if (isClosed()) return;
+        if (isClosed())
+            return;
         this.status = status.getCode();
         send();
     }
@@ -143,7 +147,8 @@ public class Response {
      * Send an empty response (Content-Length = 0)
      */
     public void send() {
-        if (isClosed()) return;
+        if (isClosed())
+            return;
         this.contentLength = 0;
         sendHeaders();
         close();
@@ -160,8 +165,18 @@ public class Response {
             return;
         }
 
-        if (isClosed()) return;
-        byte[] data = s.getBytes();
+        if (isClosed())
+            return;
+
+        Charset decodingCharset = Charset.defaultCharset();
+        try {
+            String charsetName = getContentType().split(";")[1].replace(" ", "").split("\\=")[1];
+            decodingCharset = Charset.forName(charsetName);
+        } catch (Exception e) {
+            // No valid decoding charset is found
+        }
+
+        byte[] data = s.getBytes(decodingCharset);
 
         this.contentLength = data.length;
         sendHeaders();
@@ -169,7 +184,7 @@ public class Response {
         try {
             this.body.write(s.getBytes());
         } catch (IOException e) {
-            log.error("Failed to write char sequence to client.",e );
+            log.error("Failed to write char sequence to client.", e);
         }
 
         close();
@@ -177,11 +192,12 @@ public class Response {
 
     /**
      * Sets the 'Content-Disposition' header to 'attachment' and his
-     * Content-Disposition "filename=" parameter to the file name.
-     * Normally this triggers an download event client-side.
+     * Content-Disposition "filename=" parameter to the file name. Normally this
+     * triggers an download event client-side.
      *
      * @param file The file which will be send as attachment.
-     * @return True if the file was successfully send, false if the file doesn't exists or the respose is already closed.
+     * @return True if the file was successfully send, false if the file doesn't
+     *         exists or the respose is already closed.
      */
     public boolean sendAttachment(Path file) {
         if (isClosed() || !Files.isRegularFile(file)) {
@@ -195,11 +211,11 @@ public class Response {
     }
 
     /**
-     * Send an entire file as response
-     * The mime type will be automatically detected.
+     * Send an entire file as response The mime type will be automatically detected.
      *
      * @param file The file.
-     * @return True if the file was successfully send, false if the file doesn't exists or the respose is already closed.
+     * @return True if the file was successfully send, false if the file doesn't
+     *         exists or the respose is already closed.
      */
     public boolean send(Path file) {
 
@@ -238,8 +254,8 @@ public class Response {
     }
 
     /**
-     * Send a byte array as response. Content type will be
-     * set to application/octet-streamFrom
+     * Send a byte array as response. Content type will be set to
+     * application/octet-streamFrom
      *
      * @param bytes Byte array
      * @return If operation was successful
@@ -272,8 +288,8 @@ public class Response {
     }
 
     /**
-     * Streams an input stream to the client.
-     * Requires a contentLength as well as a MediaType
+     * Streams an input stream to the client. Requires a contentLength as well as a
+     * MediaType
      *
      * @param contentLength Total size
      * @param is            Inputstream
