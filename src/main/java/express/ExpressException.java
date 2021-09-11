@@ -6,6 +6,8 @@ package express;
  */
 public class ExpressException extends RuntimeException {
 
+    private static final long serialVersionUID = 6407004104322176783L;
+
     /**
      * Constructs a new exception with an empty detail message.
      */

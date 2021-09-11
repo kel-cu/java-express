@@ -28,7 +28,6 @@ final class CookieSession implements HttpRequestHandler, Filter, FilterTask {
         this.maxAge = maxAge;
     }
 
-    @SuppressWarnings("SuspiciousMethodCalls")
     @Override
     public void handle(Request req, Response res) {
         Cookie cookie = req.getCookie(cookieName);
