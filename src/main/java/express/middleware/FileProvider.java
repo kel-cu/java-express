@@ -19,8 +19,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 /**
- * @author Simon Reinisch
- * An middleware to provide access to static server-files.
+ * @author Simon Reinisch An middleware to provide access to static
+ *         server-files.
  */
 public final class FileProvider implements HttpRequestHandler {
 
@@ -59,8 +59,8 @@ public final class FileProvider implements HttpRequestHandler {
             Path reqFile = Paths.get(root + File.separator + path);
 
             /*
-             * If the file wasn't found, it will search in the target-directory for
-             * the file by the raw-name without extension.
+             * If the file wasn't found, it will search in the target-directory for the file
+             * by the raw-name without extension.
              */
             if (options.isFallBackSearching() && !Files.exists(reqFile) && !Files.isDirectory(reqFile)) {
                 String name = reqFile.getFileName().toString();
@@ -71,8 +71,7 @@ public final class FileProvider implements HttpRequestHandler {
                     // Check if reading is allowed
                     if (Files.isReadable(parent)) {
 
-                        Optional<Path> founded = Files.walk(parent)
-                                .filter(sub -> getBaseName(sub).equals(name))
+                        Optional<Path> founded = Files.walk(parent).filter(sub -> getBaseName(sub).equals(name))
                                 .findFirst();
 
                         if (founded.isPresent()) {
@@ -88,12 +87,14 @@ public final class FileProvider implements HttpRequestHandler {
 
                 if (reqFile.getFileName().toString().charAt(0) == '.') {
                     switch (options.getDotFiles()) {
-                        case IGNORE:
-                            res.setStatus(Status._404);
-                            return;
-                        case DENY:
-                            res.setStatus(Status._403);
-                            return;
+                    case IGNORE:
+                        res.setStatus(Status._404);
+                        return;
+                    case DENY:
+                        res.setStatus(Status._403);
+                        return;
+                    default:
+                        break;
                     }
                 }
 
@@ -132,8 +133,7 @@ public final class FileProvider implements HttpRequestHandler {
             // Apply header
             if (options.isLastModified()) {
                 Instant instant = Instant.ofEpochMilli(Files.getLastModifiedTime(file).toMillis());
-                DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME
-                        .withZone(ZoneOffset.UTC);
+                DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME.withZone(ZoneOffset.UTC);
 
                 res.setHeader("Last-Modified", formatter.format(instant));
             }
