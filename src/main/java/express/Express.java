@@ -21,8 +21,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
- * @author Simon Reinisch
- * Core class of java-express
+ * @author Simon Reinisch Core class of java-express
  */
 public class Express implements Router {
 
@@ -49,8 +48,8 @@ public class Express implements Router {
     }
 
     /**
-     * Create an express instance and bind the server to an hostname.
-     * Default is "Localhost"
+     * Create an express instance and bind the server to an hostname. Default is
+     * "Localhost"
      *
      * @param hostname The host name
      */
@@ -68,8 +67,8 @@ public class Express implements Router {
     }
 
     /**
-     * Create an express instance and bind the server to an hostname.
-     * Default is "Localhost"
+     * Create an express instance and bind the server to an hostname. Default is
+     * "Localhost"
      *
      * @param hostname          The host name
      * @param httpsConfigurator The HttpsConfigurator for https
@@ -93,7 +92,8 @@ public class Express implements Router {
     }
 
     /**
-     * Add a listener which will be called when an url with this parameter is called.
+     * Add a listener which will be called when an url with this parameter is
+     * called.
      *
      * @param param   The parameter name.
      * @param request An request handler.
@@ -109,8 +109,8 @@ public class Express implements Router {
     }
 
     /**
-     * Add an key-val pair to the express app, can be used
-     * to store data. Uses ConcurrentHashMap so it's thread save.
+     * Add an key-val pair to the express app, can be used to store data. Uses
+     * ConcurrentHashMap so it's thread save.
      *
      * @param key The key
      * @param val The value
@@ -131,8 +131,8 @@ public class Express implements Router {
     }
 
     /**
-     * Set an executor service. Default is CachedThreadPool
-     * Can only changed if the server isn't already stardet.
+     * Set an executor service. Default is CachedThreadPool Can only changed if the
+     * server isn't already stardet.
      *
      * @param executor The new executor.
      * @throws IOException If the server is currently running
@@ -241,9 +241,10 @@ public class Express implements Router {
     }
 
     /**
-     * Binds a or multiple objects with request-handler methods on this express instance.
-     * With the use of the DynExpress Annotation handler can be declared with a annotation
-     * on a compatible method which has as parameter a Request and Response object.
+     * Binds a or multiple objects with request-handler methods on this express
+     * instance. With the use of the DynExpress Annotation handler can be declared
+     * with a annotation on a compatible method which has as parameter a Request and
+     * Response object.
      *
      * @param objects Object with proper request handler methods.
      * @return This express instance.
@@ -284,9 +285,8 @@ public class Express implements Router {
                         paramString = paramString.substring(0, paramString.length() - 2);
                     }
 
-                    System.err.println("Skipped method with invalid parameter types found in " +
-                            method.getName() + "(" + paramString + ") in " + o.getClass().getName() +
-                            ". Expected Request and Response.");
+                    System.err.println("Skipped method with invalid parameter types found in " + method.getName() + "("
+                            + paramString + ") in " + o.getClass().getName() + ". Expected Request and Response.");
                     continue;
                 }
 
@@ -311,16 +311,16 @@ public class Express implements Router {
     }
 
     /**
-     * Start the HTTP-Server on port 80.
-     * This method is asynchronous so be sure to add an listener or keep it in mind!
+     * Start the HTTP-Server on port 80. This method is asynchronous so be sure to
+     * add an listener or keep it in mind!
      */
     public void listen() {
         listen(null, 80);
     }
 
     /**
-     * Start the HTTP-Server on a specific port
-     * This method is asynchronous so be sure to add an listener or keep it in mind!
+     * Start the HTTP-Server on a specific port This method is asynchronous so be
+     * sure to add an listener or keep it in mind!
      *
      * @param port The port.
      */
@@ -329,8 +329,8 @@ public class Express implements Router {
     }
 
     /**
-     * Start the HTTP-Server on port 80.
-     * This method is asynchronous so be sure to add an listener or keep it in mind!
+     * Start the HTTP-Server on port 80. This method is asynchronous so be sure to
+     * add an listener or keep it in mind!
      *
      * @param onStart An listener which will be fired after the server is stardet.
      */
@@ -339,8 +339,8 @@ public class Express implements Router {
     }
 
     /**
-     * Start the HTTP-Server on a specific port.
-     * This method is asynchronous so be sure to add an listener or keep it in mind.
+     * Start the HTTP-Server on a specific port. This method is asynchronous so be
+     * sure to add an listener or keep it in mind.
      *
      * @param onStart An listener which will be fired after the server is stardet.
      * @param port    The port.
@@ -352,7 +352,8 @@ public class Express implements Router {
                 // Fire worker threads
                 worker.forEach(FilterWorker::start);
 
-                InetSocketAddress socketAddress = this.hostname == null ? new InetSocketAddress(port) : new InetSocketAddress(this.hostname, port);
+                InetSocketAddress socketAddress = this.hostname == null ? new InetSocketAddress(port)
+                        : new InetSocketAddress(this.hostname, port);
                 if (httpsConfigurator != null) {
 
                     // Create https server
@@ -396,5 +397,9 @@ public class Express implements Router {
             // Stop worker threads
             worker.forEach(FilterWorker::stop);
         }
+    }
+
+    public HttpServer getHttpServer() {
+        return httpServer;
     }
 }

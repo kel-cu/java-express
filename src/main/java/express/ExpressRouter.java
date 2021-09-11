@@ -9,8 +9,7 @@ import express.http.HttpRequestHandler;
 import java.util.ArrayList;
 
 /**
- * @author Simon Reinisch
- * Basic implementation of an router
+ * @author Simon Reinisch Basic implementation of an router
  */
 public class ExpressRouter implements Router {
 
@@ -88,11 +87,11 @@ public class ExpressRouter implements Router {
         return this;
     }
 
-    ArrayList<FilterWorker> getWorker() {
+    public ArrayList<FilterWorker> getWorker() {
         return workers;
     }
 
-    FilterLayerHandler getHandler() {
+    public FilterLayerHandler getHandler() {
         return handler;
     }
 }
