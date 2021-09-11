@@ -366,7 +366,7 @@ public class Request {
      *
      * @return An entire list of key-values
      */
-    public HashMap<String, String> getFormQuerys() {
+    public HashMap<String, String> getFormQueries() {
         return formQueries;
     }
 
@@ -411,7 +411,7 @@ public class Request {
      *
      * @return An entire list of key-values
      */
-    public HashMap<String, String> getQuerys() {
+    public HashMap<String, String> getQueries() {
         return queries;
     }
 

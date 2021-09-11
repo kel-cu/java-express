@@ -64,7 +64,7 @@ Add the following dependency coordinate from Jitpack on your favorite build syst
   - [URL Basics](#url-basics)
     - [URL Parameter](#url-parameter)
       - [URL Parameter Listener](#url-parameter-listener)
-    - [URL Querys](#url-querys)
+    - [URL Queries](#url-queries)
   - [Cookies](#cookies)
     - [Form data](#form-data)
   - [HTTP Relevant classes](#http-relevant-classes)
@@ -244,9 +244,9 @@ app.onParam("id", (req, res) -> {
 
 Now, this function will be called every time when an context is requested which contains the `id` parameter placeholder.
 
-### URL Querys
+### URL Queries
 
-If you make an request which contains querys, you can access the querys over `req.getQuery(NAME)`.
+If you make an request which contains queries, you can access the queries over `req.getQuery(NAME)`.
 
 Example request: `GET`  `/posts?page=12&from=john`:
 
@@ -384,9 +384,9 @@ req.getHost();                    // Returns the request host
 req.getContentLength();           // Returns the content length
 req.getContentType();             // Returns the content type
 req.getMiddlewareContent(String name); // Returns the content from an middleware by name
-req.getFormQuerys();              // Returns all form querys
+req.getFormQueries();              // Returns all form queries
 req.getParams();                  // Returns all params
-req.getQuerys();                  // Returns all querys
+req.getQueries();                  // Returns all queries
 req.getFormQuery(String name);    // Returns the form value by name
 req.getHeader(String key);        // Returns the value from an header field by name
 req.getParam(String key);         // Returns the url parameter by name

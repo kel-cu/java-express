@@ -63,11 +63,11 @@ final class RequestUtils {
      * @return An list with key-values which are encoded in UTF8.
      */
     static HashMap<String, String> parseRawQuery(String rawQuery) {
-        HashMap<String, String> querys = new HashMap<>();
+        HashMap<String, String> queries = new HashMap<>();
 
         // Return empty map on null
         if (rawQuery == null) {
-            return querys;
+            return queries;
         }
 
         StringBuilder key = new StringBuilder();
@@ -84,7 +84,7 @@ final class RequestUtils {
             } else if (c == '&') {
 
                 try {
-                    querys.put(URLDecoder.decode(key.toString(), "UTF-8"), URLDecoder.decode(val.toString(), "UTF8"));
+                    queries.put(URLDecoder.decode(key.toString(), "UTF-8"), URLDecoder.decode(val.toString(), "UTF8"));
                 } catch (UnsupportedEncodingException ignored) {
                 }
 
@@ -99,10 +99,10 @@ final class RequestUtils {
         }
 
         if (c != '=' && c != '&') {
-            querys.put(key.toString(), val.toString());
+            queries.put(key.toString(), val.toString());
         }
 
-        return querys;
+        return queries;
     }
 
 }
