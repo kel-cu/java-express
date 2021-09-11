@@ -10,14 +10,11 @@
   <a href="https://choosealicense.com/licenses/mit/">
     <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-blue.svg">
   </a>
-  <a href="https://www.patreon.com/simonwep">
-    <img alt="Support me" src="https://img.shields.io/badge/patreon-support-DF2D41.svg">
-  </a>
 </p>
 
 
 # State of this project
-I created this years ago and I'm no longer actively working with java. If anyone is interested maintaining this (and has experience with java), feel free to leave a comment [here](https://github.com/Simonwep/java-express/issues/25). It merely was a proof-of-concept of how we could  do things more the "funcional" oriented way and less like big java-frameworks and library use to be (as seen on simple but extremely popular libraries such as [expressjs](https://expressjs.com/)).
+I am currently maintaining a copy of this project with minor QoL changes, and will mostly be used by me. If the original author belives them to be useful, he can merge them back into the main project. I cannot guarantee any kind of support for this, however I will be doing my best to maintain this.
 
 # Getting Started
 
