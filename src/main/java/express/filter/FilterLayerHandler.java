@@ -11,17 +11,17 @@ import java.util.function.Consumer;
 
 /**
  * @author Simon Reinisch
- * <p>
- * Handler for multiple FilterLayer.
+ *         <p>
+ *         Handler for multiple FilterLayer.
  */
 public class FilterLayerHandler {
 
-    private final FilterLayer[] layers;
+    private final FilterLayer<HttpRequestHandler>[] layers;
 
+    @SuppressWarnings("unchecked") // This warning is unavoidable
     public FilterLayerHandler(int layers) {
-
         // Create & initialize layers
-        this.layers = new FilterLayer[layers];
+        this.layers = (FilterLayer<HttpRequestHandler>[]) new FilterLayer[layers];
         for (int i = 0; i < this.layers.length; i++) {
             this.layers[i] = new FilterLayer<>();
         }
@@ -32,7 +32,7 @@ public class FilterLayerHandler {
         Response response = new Response(httpExchange);
 
         // First fire all middleware's, then the normal request filter
-        for (FilterLayer chain : layers) {
+        for (FilterLayer<?> chain : layers) {
             chain.filter(request, response);
 
             if (response.isClosed()) {
@@ -47,7 +47,6 @@ public class FilterLayerHandler {
      * @param level   The layers.
      * @param handler The handler, will be append to the top of the layers.
      */
-    @SuppressWarnings("unchecked")
     public void add(int level, HttpRequestHandler handler) {
 
         if (level >= layers.length) {
@@ -64,15 +63,16 @@ public class FilterLayerHandler {
     /**
      * Merge two FilterLayerHandler
      *
-     * @param filterLayerHandler The FilterLayerHandler which you want to merge with this
+     * @param filterLayerHandler The FilterLayerHandler which you want to merge with
+     *                           this
      */
-    @SuppressWarnings("unchecked")
     public void combine(FilterLayerHandler filterLayerHandler) {
         if (filterLayerHandler != null) {
-            FilterLayer[] chains = filterLayerHandler.getLayers();
+            FilterLayer<HttpRequestHandler>[] chains = filterLayerHandler.getLayers();
 
             if (chains.length != layers.length) {
-                throw new ExpressException("Cannot add an filterLayerHandler with different layers sizes: " + chains.length + " != " + layers.length);
+                throw new ExpressException("Cannot add an filterLayerHandler with different layers sizes: "
+                        + chains.length + " != " + layers.length);
             }
 
             for (int i = 0; i < chains.length; i++) {
@@ -86,17 +86,17 @@ public class FilterLayerHandler {
      *
      * @param layerConsumer An consumer for the layers
      */
-    public void forEach(Consumer<FilterLayer> layerConsumer) {
+    public void forEach(Consumer<FilterLayer<HttpRequestHandler>> layerConsumer) {
         if (layerConsumer == null) {
             return;
         }
 
-        for (FilterLayer layer : layers) {
+        for (FilterLayer<HttpRequestHandler> layer : layers) {
             layerConsumer.accept(layer);
         }
     }
 
-    private FilterLayer[] getLayers() {
+    private FilterLayer<HttpRequestHandler>[] getLayers() {
         return layers;
     }
 

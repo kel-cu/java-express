@@ -164,7 +164,6 @@ public class Express implements Router {
      * @param router The router.
      * @return Express this express instance
      */
-    @SuppressWarnings("unchecked")
     public Express use(String root, ExpressRouter router) {
 
         router.getHandler().forEach(fl -> fl.getFilter().forEach(layer -> {
