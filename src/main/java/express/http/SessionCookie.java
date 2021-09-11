@@ -1,5 +1,7 @@
 package express.http;
 
+import java.time.Instant;
+
 /**
  * @author Simon Reinisch
  * An simple SessionCookie implemetation.
@@ -13,7 +15,7 @@ public class SessionCookie {
 
     public SessionCookie(long maxAge) {
         this.maxAge = maxAge;
-        this.created = System.currentTimeMillis();
+        this.created = Instant.now().getEpochSecond();
     }
 
     /**

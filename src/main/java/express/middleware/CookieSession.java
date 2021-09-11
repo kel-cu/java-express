@@ -9,11 +9,11 @@ import express.http.request.Request;
 import express.http.response.Response;
 import express.utils.Utils;
 
+import java.time.Instant;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author Simon Reinisch
- * An middleware to create cookie-sessions.
+ * @author Simon Reinisch A middleware to create cookie-sessions.
  */
 final class CookieSession implements HttpRequestHandler, Filter, FilterTask {
 
@@ -72,7 +72,7 @@ final class CookieSession implements HttpRequestHandler, Filter, FilterTask {
 
     @Override
     public void onUpdate() {
-        long current = System.currentTimeMillis();
+        long current = Instant.now().getEpochSecond();
 
         cookies.forEach((cookieHash, cookie) -> {
             if (current > cookie.getCreated() + cookie.getMaxAge()) {
