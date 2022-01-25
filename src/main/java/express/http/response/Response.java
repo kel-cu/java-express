@@ -323,8 +323,10 @@ public class Response {
         try {
             this.contentLength = contentLength;
 
-            // Set content type to octet-stream
-            this.contentType = mediaType.getMIME();
+            // Set content type
+            if (mediaType!=null & this.contentType==null) {
+                this.contentType = mediaType.getMIME();
+            }
 
             // Send header
             sendHeaders();
