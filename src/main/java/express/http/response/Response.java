@@ -211,20 +211,38 @@ public class Response {
     }
 
     /**
-     * Send an entire file as response The mime type will be automatically detected.
+     * Send an entire file as response content, with transfer-encoding: chunked.
+     * The mime type will be automatically detected.
+     *
+     * @param file The file.
+     * @return True if the file was successfully send, false if the file doesn't
+     *         exists or the respose is already closed.
+     */
+    public boolean sendChunked(Path file) {
+        return sendFile(file, true);
+    }
+
+    /**
+     * Send an entire file as response content. The mime type will be automatically detected.
      *
      * @param file The file.
      * @return True if the file was successfully send, false if the file doesn't
      *         exists or the respose is already closed.
      */
     public boolean send(Path file) {
+        return sendFile(file, false);
+    }
+
+    private boolean sendFile(Path file, boolean wantChunked) {
 
         if (isClosed() || !Files.isRegularFile(file)) {
             return false;
         }
 
         try {
-            this.contentLength = Files.size(file);
+            if (!wantChunked) {
+                this.contentLength = Files.size(file);
+            }
 
             // Detect content type
             MediaType mediaType = Utils.getContentType(file);
@@ -305,8 +323,10 @@ public class Response {
         try {
             this.contentLength = contentLength;
 
-            // Set content type to octet-stream
-            this.contentType = mediaType.getMIME();
+            // Set content type
+            if (mediaType!=null & this.contentType==null) {
+                this.contentType = mediaType.getMIME();
+            }
 
             // Send header
             sendHeaders();
@@ -327,6 +347,17 @@ public class Response {
         }
 
         return true;
+    }
+
+    /**
+     * Streams an input stream of unspecified length to the client. Requires a MediaType.
+     *
+     * @param is            Inputstream
+     * @param mediaType     Stream type
+     * @return If operation was successful
+     */
+    public boolean streamFrom(InputStream is, MediaType mediaType) {
+        return streamFrom(0,is,mediaType);
     }
 
     /**
