@@ -369,13 +369,15 @@ public class Response {
 
     private void sendHeaders() {
         try {
+            boolean hasContent = this.contentLength != 0;
+            if (hasContent) {
+                // Fallback
+                String contentType = getContentType() == null ? MediaType._bin.getExtension() : getContentType();
 
-            // Fallback
-            String contentType = getContentType() == null ? MediaType._bin.getExtension() : getContentType();
-
-            // Set header and send response
-            this.headers.set("Content-Type", contentType);
-            this.httpExchange.sendResponseHeaders(status, contentLength);
+                // Set header and send response
+                this.headers.set("Content-Type", contentType);
+            }
+            this.httpExchange.sendResponseHeaders(status, (hasContent) ? contentLength : -1);
         } catch (IOException e) {
             log.error("Failed to send headers.", e);
         }
