@@ -72,7 +72,7 @@ final class RequestUtils {
                 if(arg.contains("=")){
                     String[] data = arg.split("=");
                     key = URLDecoder.decode(data[0], StandardCharsets.UTF_8);
-                    value = (data[1] != null && !data[1].isBlank()) ? URLDecoder.decode(data[1], StandardCharsets.UTF_8) : null;
+                    value = (data.length >= 2 && !data[1].isBlank()) ? URLDecoder.decode(data[1], StandardCharsets.UTF_8) : null;
                 } else key = arg;
                 queries.put(key, value);
             }
