@@ -32,25 +32,25 @@ Add the following dependency coordinate from Jitpack on your favorite build syst
 #### Maven 
 ```xml
 <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
+    <id>kelcuprum</id>
+    <url>https://repo.kelcuprum.ru/releases</url>
 </repository>
 ```
 ### Stable release
 ```xml
 <dependency>
-    <groupId>com.github.masecla22</groupId>
+    <groupId>ru.kelcuprum</groupId>
     <artifactId>java-express</artifactId>
-    <version>0.2.2</version>
+    <version>[version]</version>
 </dependency>
 ```
 ### Bleeding-edge
+#### Maven
 ```xml
-<dependency>
-    <groupId>com.github.masecla22</groupId>
-    <artifactId>java-express</artifactId>
-    <version>master-SNAPSHOT</version>
-</dependency>
+<repository>
+    <id>kelcuprum</id>
+    <url>https://repo.kelcuprum.ru/snapshots</url>
+</repository>
 ```
 
 
@@ -355,17 +355,18 @@ res.setContentType(String type);       // Set the content type
 res.isClosed();                        // Check if the response is already closed
 res.getHeader(String key);             // Get the value from an header field via key
 res.setHeader(String key, String val); // Add an specific response header
-res.sendAttachment(Path file)          // Sends a file as attachment
+res.sendAttachment(Path file);         // Sends a file as attachment
+res.sendJson(JsonElement json);        // Send bytes as response
 res.send(String str);                  // Send a string as response
 res.send(Path path);                   // Send a file as response
-res.send(byte[] bytes)                 // Send bytes as response
+res.send(byte[] bytes);                // Send bytes as response
 res.send();                            // Send empty response
 res.redirect(String location);         // Redirect the request to another url
 res.setCookie(Cookie cookie);          // Add an cookie to the response
 res.sendStatus(Status status);         // Set the response status and send an empty response
 res.getStatus();                       // Returns the current status
 res.setStatus(Status status);          // Set the repose status
-res.streamFrom(long contentLength, InputStream is, MediaType mediaType) // Send a inputstream with known length and type
+res.streamFrom(long contentLength, InputStream is, MediaType mediaType); // Send a inputstream with known length and type
 ```
 
 The response object calls are comments because **you can only call the .send(xy) once each request!**

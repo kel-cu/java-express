@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
+import com.google.gson.JsonElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,9 +101,19 @@ public class Response {
      * @return This Response instance.
      */
     public Response setStatus(Status status) {
+        return setStatus(status.getCode());
+    }
+
+    /**
+     * Set the response-status. Default is 200 (ok).
+     *
+     * @param status The response status.
+     * @return This Response instance.
+     */
+    public Response setStatus(int status) {
         if (isClosed())
             return this;
-        this.status = status.getCode();
+        this.status = status;
         return this;
     }
 
@@ -112,9 +123,19 @@ public class Response {
      * @param status The response status.
      */
     public void sendStatus(Status status) {
+        sendStatus(status.getCode());
+    }
+
+
+    /**
+     * Set the response-status and send the response.
+     *
+     * @param status The response status.
+     */
+    public void sendStatus(int status) {
         if (isClosed())
             return;
-        this.status = status.getCode();
+        this.status = status;
         send();
     }
 
@@ -152,6 +173,22 @@ public class Response {
         this.contentLength = 0;
         sendHeaders();
         close();
+    }
+    /**
+     * Send an json as response
+     * @param j The json
+     */
+    public void json(String j){
+        setContentType(MediaType._json.getMIME());
+        send(j);
+    }
+    /**
+     * Send an json as response
+     * @param j The json
+     */
+    public void json(JsonElement j){
+        setContentType(MediaType._json.getMIME());
+        send(j.toString());
     }
 
     /**
