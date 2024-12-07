@@ -67,9 +67,13 @@ final class RequestUtils {
         String[] values = rawQuery.split("&");
         for(String arg : values){
             if(!arg.isEmpty()) {
-                String[] data = arg.split("=");
-                String key = URLDecoder.decode(data[0], StandardCharsets.UTF_8);
-                String value = URLDecoder.decode(data[1], StandardCharsets.UTF_8);
+                String key = null;
+                String value = null;
+                if(arg.contains("=")){
+                    String[] data = arg.split("=");
+                    key = URLDecoder.decode(data[0], StandardCharsets.UTF_8);
+                    value = (data[1] != null && !data[1].isBlank()) ? URLDecoder.decode(data[1], StandardCharsets.UTF_8) : null;
+                }
                 queries.put(key, value);
             }
         }
