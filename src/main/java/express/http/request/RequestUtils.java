@@ -3,11 +3,10 @@ package express.http.request;
 import com.sun.net.httpserver.Headers;
 import express.http.Cookie;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
-
 final class RequestUtils {
 
     private RequestUtils() {}
@@ -64,45 +63,16 @@ final class RequestUtils {
      */
     static HashMap<String, String> parseRawQuery(String rawQuery) {
         HashMap<String, String> queries = new HashMap<>();
-
-        // Return empty map on null
-        if (rawQuery == null) {
-            return queries;
-        }
-
-        StringBuilder key = new StringBuilder();
-        StringBuilder val = new StringBuilder();
-        char[] chars = rawQuery.toCharArray();
-        boolean keyac = false;
-        char c = '=';
-
-        for (char cc : chars) {
-            c = cc;
-
-            if (c == '=') {
-                keyac = true;
-            } else if (c == '&') {
-
-                try {
-                    queries.put(URLDecoder.decode(key.toString(), "UTF-8"), URLDecoder.decode(val.toString(), "UTF8"));
-                } catch (UnsupportedEncodingException ignored) {
-                }
-
-                key.setLength(0);
-                val.setLength(0);
-                keyac = false;
-            } else if (keyac) {
-                val.append(c);
-            } else {
-                key.append(c);
+        if(rawQuery == null) return queries;
+        String[] values = rawQuery.split("&");
+        for(String arg : values){
+            if(!arg.isEmpty()) {
+                String[] data = arg.split("=");
+                String key = URLDecoder.decode(data[0], StandardCharsets.UTF_8);
+                String value = URLDecoder.decode(data[1], StandardCharsets.UTF_8);
+                queries.put(key, value);
             }
         }
-
-        if (c != '=' && c != '&') {
-            queries.put(key.toString(), val.toString());
-        }
-
         return queries;
     }
-
 }
