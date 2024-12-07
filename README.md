@@ -350,13 +350,14 @@ Over the response object, you have serveral possibility like setting cookies, se
 
 ```java
 res.getContentType();                  // Returns the current content type
+res.json(JsonElement json);            // Send json as response
+res.json(String json);                 // Send json as response
 res.setContentType(MediaType type);    // Set the content type with enum help
 res.setContentType(String type);       // Set the content type
 res.isClosed();                        // Check if the response is already closed
 res.getHeader(String key);             // Get the value from an header field via key
 res.setHeader(String key, String val); // Add an specific response header
 res.sendAttachment(Path file);         // Sends a file as attachment
-res.sendJson(JsonElement json);        // Send bytes as response
 res.send(String str);                  // Send a string as response
 res.send(Path path);                   // Send a file as response
 res.send(byte[] bytes);                // Send bytes as response
