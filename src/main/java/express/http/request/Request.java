@@ -241,6 +241,7 @@ public class Request {
         return this.method;
     }
 
+
     /**
      * Checks if the connection is 'fresh'
      * It is true if the cache-control request header doesn't have a no-cache directive, the if-modified-since request header is specified
@@ -430,6 +431,9 @@ public class Request {
      */
     public List<String> getHeader(String header) {
         return Optional.ofNullable(headers.get(header)).orElse(Collections.emptyList());
+    }
+    public Headers getHeaders(){
+        return headers;
     }
 
     /**

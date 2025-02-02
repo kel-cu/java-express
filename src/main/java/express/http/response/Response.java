@@ -316,6 +316,9 @@ public class Response {
      * @return If operation was successful
      */
     public boolean sendBytes(byte[] bytes) {
+        return sendBytes(bytes, MediaType._bin.getMIME());
+    }
+    public boolean sendBytes(byte[] bytes, String contentType) {
 
         if (isClosed() || bytes == null) {
             return false;
@@ -325,7 +328,7 @@ public class Response {
             this.contentLength = bytes.length;
 
             // Set content type to octet streamFrom
-            this.contentType = MediaType._bin.getMIME();
+            this.contentType = contentType;
 
             // Send header
             sendHeaders();
