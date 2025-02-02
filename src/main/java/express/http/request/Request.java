@@ -57,13 +57,20 @@ public class Request {
     }
 
     public Request(HttpExchange exchange, Express express) {
+        InetSocketAddress deferInet;
         this.express = express;
         this.method = exchange.getRequestMethod();
         this.uri = exchange.getRequestURI();
         this.headers = exchange.getRequestHeaders();
         this.body = exchange.getRequestBody();
-        this.inet = exchange.getRemoteAddress();
-
+        deferInet = exchange.getRemoteAddress();
+        if(headers.containsKey("True-Client-IP"))
+            deferInet = new InetSocketAddress(headers.getFirst("True-Client-IP"), deferInet.getPort());
+        else if(headers.containsKey("Cf-connecting-ip"))
+            deferInet = new InetSocketAddress(headers.getFirst("Cf-connecting-ip"), deferInet.getPort());
+        else if(headers.containsKey("X-forwarded-for"))
+            deferInet = new InetSocketAddress(headers.getFirst("X-forwarded-for"), deferInet.getPort());
+        this.inet = deferInet;
         this.protocol = exchange.getProtocol();
         this.secure = exchange instanceof HttpsExchange; // Can be suckered?
 

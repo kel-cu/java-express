@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.kelcuprum</groupId>
 	<artifactId>java-express</artifactId>
-	<version>0.2.4-dev.5</version>
+	<version>0.2.4-dev.6-tb.4</version>
 	<build>
 		<plugins>
 			<plugin>
