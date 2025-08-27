@@ -7,6 +7,7 @@ package express.utils;
 public enum MediaType {
 
     _aw("aw", "application/applixware"),
+    _apng("apng", "application/apng"),
     _atom("atom", "application/atom+xml "),
     _atomcat("atomcat", "application/atomcat+xml"),
     _atomsvc("atomsvc", "application/atomsvc+xml"),
@@ -552,14 +553,14 @@ public enum MediaType {
     _ecelp9600("ecelp9600", "audio/vnd.nuera.ecelp9600"),
     _rip("rip", "audio/vnd.rip"),
     _weba("weba", "audio/webm"),
-    _aac("aac", "audio/x-aac"),
-    _aif("aif", "audio/x-aiff"),
-    _m3u("m3u", "audio/x-mpegurl"),
-    _wax("wax", "audio/x-ms-wax"),
-    _wma("wma", "audio/x-ms-wma"),
-    _ram("ram", "audio/x-pn-realaudio"),
-    _rmp("rmp", "audio/x-pn-realaudio-plugin"),
-    _wav("wav", "audio/x-wav"),
+    _aac("aac", "audio/aac"),
+    _aif("aif", "audio/aiff"),
+    _m3u("m3u", "audio/mpegurl"),
+    _wax("wax", "audio/ms-wax"),
+    _wma("wma", "audio/ms-wma"),
+    _ram("ram", "audio/pn-realaudio"),
+    _rmp("rmp", "audio/pn-realaudio-plugin"),
+    _wav("wav", "audio/wav"),
     _cdx("cdx", "chemical/x-cdx"),
     _cif("cif", "chemical/x-cif"),
     _cmdf("cmdf", "chemical/x-cmdf"),
@@ -575,7 +576,7 @@ public enum MediaType {
     _jpg("jpg", "image/jpeg"),
     _pjpeg("pjpeg", "image/pjpeg"),
     _ktx("ktx", "image/ktx"),
-    _png("png", "image/x-citrix-png"),
+    _png("png", "image/png"),
     _btif("btif", "image/prs.btif"),
     _svg("svg", "image/svg+xml"),
     _tiff("tiff", "image/tiff"),
@@ -662,6 +663,7 @@ public enum MediaType {
     _jpm("jpm", "video/jpm"),
     _mj2("mj2", "video/mj2"),
     _mp4("mp4", "video/mp4"),
+    _mp3("mp3", "video/mpeg"),
     _mpeg("mpeg", "video/mpeg"),
     _ogv("ogv", "video/ogg"),
     _qt("qt", "video/quicktime"),
@@ -686,6 +688,7 @@ public enum MediaType {
     _wmx("wmx", "video/x-ms-wmx"),
     _wvx("wvx", "video/x-ms-wvx"),
     _avi("avi", "video/x-msvideo"),
+    _avif("avif", "image/avif"),
     _movie("movie", "video/x-sgi-movie"),
     _ice("ice", "x-conference/x-cooltalk"),
     _par("par", "text/plain-bas"),
@@ -703,7 +706,7 @@ public enum MediaType {
 
     public static MediaType getByExtension(String extension) {
         for (MediaType type : values()) {
-            if (type.extension.equals(extension)) {
+            if (type.extension.equalsIgnoreCase(extension)) {
                 return type;
             }
         }

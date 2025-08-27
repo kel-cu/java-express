@@ -283,7 +283,7 @@ public class Response {
 
             // Detect content type
             MediaType mediaType = Utils.getContentType(file);
-            this.contentType = mediaType == null ? null : mediaType.getMIME();
+            this.contentType = this.contentType == null ? (mediaType == null ? null : mediaType.getMIME()) : this.contentType;
 
             // Send header
             sendHeaders();
@@ -427,6 +427,7 @@ public class Response {
         try {
             this.body.close();
             this.isClose = true;
+            System.gc();
         } catch (IOException e) {
             log.error("Failed to close output stream.", e);
         }

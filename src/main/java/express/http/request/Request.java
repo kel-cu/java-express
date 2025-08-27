@@ -18,10 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Simon Reinisch
@@ -34,7 +31,7 @@ public class Request {
 
     private final String protocol;                      // Request protocol
     private final URI uri;                              // Request uri
-    private final InputStream body;                     // Request body
+    private final InputStream body;                     // Request uri
     private final Headers headers;                      // Request Headers
     private final boolean secure;
     private final String contentType;                   // Request content-type
@@ -46,7 +43,7 @@ public class Request {
     private final HashMap<String, Object> middleware;   // Middleware Data
     private final HashMap<String, Cookie> cookies;      // Request cookies
     private final HashMap<String, String> queries;      // URL Query parameters
-    private final HashMap<String, String> formQueries; // Form query parameters (application/x-www-form-urlencoded)
+    private final HashMap<String, String> formQueries;  // Form query parameters (application/x-www-form-urlencoded)
 
     private HashMap<String, String> params;             // URL Params, would be added in ExpressFilterImpl
     private String context;                             // Context which matched
@@ -64,12 +61,13 @@ public class Request {
         this.headers = exchange.getRequestHeaders();
         this.body = exchange.getRequestBody();
         deferInet = exchange.getRemoteAddress();
-        if(headers.containsKey("True-Client-IP"))
-            deferInet = new InetSocketAddress(headers.getFirst("True-Client-IP"), deferInet.getPort());
-        else if(headers.containsKey("Cf-connecting-ip"))
-            deferInet = new InetSocketAddress(headers.getFirst("Cf-connecting-ip"), deferInet.getPort());
-        else if(headers.containsKey("X-forwarded-for"))
-            deferInet = new InetSocketAddress(headers.getFirst("X-forwarded-for"), deferInet.getPort());
+        try {
+            if (headers.containsKey("Cf-connecting-ip")) {
+                deferInet = new InetSocketAddress(headers.getFirst("Cf-connecting-ip"), deferInet.getPort());
+            } else if (headers.containsKey("X-real-ip")) {
+                deferInet = new InetSocketAddress(headers.getFirst("X-real-ip"), deferInet.getPort());
+            }
+        } catch (Exception ignored) {}
         this.inet = deferInet;
         this.protocol = exchange.getProtocol();
         this.secure = exchange instanceof HttpsExchange; // Can be suckered?
@@ -432,7 +430,8 @@ public class Request {
     public List<String> getHeader(String header) {
         return Optional.ofNullable(headers.get(header)).orElse(Collections.emptyList());
     }
-    public Headers getHeaders(){
+
+    public Headers getHeaders() {
         return headers;
     }
 

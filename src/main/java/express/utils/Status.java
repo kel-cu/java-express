@@ -10,6 +10,7 @@ public enum Status {
     _100(100, "Continue"),
     _101(101, "Switching Protocols"),
     _102(102, "Processing"),
+    _103(103, "Early Hints"),
 
     // Success
     _200(200, "OK"),
@@ -62,6 +63,7 @@ public enum Status {
     _429(429, "Too Many Requests"),
     _431(431, "Request Header Fields Too Large"),
     _444(444, "Connection Closed Without Response"),
+    _449(449, "Retry With"),
     _451(451, "Unavailable For Legal Reasons"),
     _499(499, "Client Closed Request"),
 
@@ -75,8 +77,16 @@ public enum Status {
     _506(506, "Variant Also Negotiates"),
     _507(507, "Insufficient Storage"),
     _508(508, "Loop Detected"),
+    _509(509, "Bandwidth Limit Exceeded"),
     _510(510, "Not Extended"),
     _511(511, "Network Authentication Required"),
+    _520(520, "Unknown Error"),
+    _521(521, "Web Server is Down"),
+    _522(522, "Connection Timed Out"),
+    _523(523, "Origin Is Unreachable"),
+    _524(524, "A Timeout Occurred"),
+    _525(525, "SSL Handshake Failed"),
+    _526(526, "Invalid SSL Certificate"),
     _599(599, "Network Connect Timeout Error");
 
 

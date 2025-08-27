@@ -6,9 +6,11 @@ import express.http.request.Request;
 import express.http.response.Response;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
 public class HttpProxy implements HttpRequestHandler, Filter {
@@ -34,8 +36,8 @@ public class HttpProxy implements HttpRequestHandler, Filter {
                 for(String key : request.getQueries().keySet()){
                     path.append(isFirst ? "?" : "&");
                     if(isFirst) isFirst = false;
-                    path.append(key);
-                    if(request.getQueries().get(key) != null) path.append("=").append(request.getQueries().get(key));
+                    path.append(URLEncoder.encode(key, StandardCharsets.UTF_8));
+                    if(request.getQueries().get(key) != null) path.append("=").append(URLEncoder.encode(request.getQueries().get(key), StandardCharsets.UTF_8));
                 }
                 URI uri = new URI(address + path);
                 HttpRequest.Builder builder = HttpRequest.newBuilder(uri);
@@ -63,6 +65,7 @@ public class HttpProxy implements HttpRequestHandler, Filter {
                 if(resp.headers().map().containsKey("Content-Type"))
                     response.sendBytes(bytes, resp.headers().firstValue("Content-Type").get());
                 else response.sendBytes(bytes);
+                bytes = null; System.gc();
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.kelcuprum</groupId>
 	<artifactId>java-express</artifactId>
-	<version>0.2.4-dev.11</version>
+	<version>0.2.5-dev.1</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -43,12 +43,22 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.11.0</version>
+			<version>2.12.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>2.0.0-alpha5</version>
+			<version>2.1.0-alpha1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
 		</dependency>
 	</dependencies>
 </project>
