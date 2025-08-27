@@ -32,7 +32,7 @@ public class Response {
     private final OutputStream body;
     private final Headers headers;
 
-    private String contentType = MediaType._txt.getMIME();
+    private String contentType;
     private boolean isClose = false;
     private long contentLength = 0;
     private int status = 200;
@@ -143,7 +143,7 @@ public class Response {
      * @return The current contentType
      */
     public String getContentType() {
-        return contentType;
+        return contentType == null ? MediaType._txt.getMIME() : contentType;
     }
 
     /**
